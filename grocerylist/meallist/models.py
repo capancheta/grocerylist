@@ -27,4 +27,4 @@ class Meals(models.Model):
         db_table = "meallist_meals"
 
     def __str__(self):
-        return self.name
+        return self.meal
