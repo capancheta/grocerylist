@@ -1,7 +1,17 @@
 <table>
-{% for m in meals %}
-    <td>{{ m.type }}</td>
-    <td>{{ m.day }}</td>
-    <td>{{ m.meal }}</td>
-{% endfor %}
+    <tr>
+    <td>Date</td>
+    <td>Type</td>
+    <td>Day</td>
+    <td>Meal Name</td>
+    </tr>
+
+    {% for m in meals %}
+        <tr>
+        <td>{{ m.date }}</td>
+        <td>{{ m.get_type_displayp }}</td>
+        <td>{{ m.day }}</td>
+        <td>{{ m.meal }}</td>
+        </tr>
+    {% endfor %}
 </table>
