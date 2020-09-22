@@ -2,8 +2,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import MealNew
 from grocerylist.meallist.models import Meals
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils import timezone
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -44,3 +45,24 @@ class NewMeal(CreateView):
         return redirect("meal.list")
 
     
+class UpdateMeal(UpdateView):
+    model = Meals
+    form_class = MealNew
+    context_object_name = "meals"
+    template_name = "meallist/new_meal.html"
+    pk_url_kwarg = "meal_id"
+
+    def form_valid(self, form):
+        meal = form.save(commit=False)
+        meal.updated_at = timezone.now()
+        meal.save()
+        return redirect('meal.list',)    
+
+
+class DeleteMeal(DeleteView):
+    model = Meals
+    pk_url_kwarg = "meal_id"
+    context_object_name = "meal"
+    success_url = reverse_lazy('meal.list')
+    template_name  = "meallist/delete_meal.html"
+

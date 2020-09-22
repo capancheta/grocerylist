@@ -1,17 +1,25 @@
+<a href = "{% url 'meal.new' %}">New</a>
+
 <table>
     <tr>
     <td>Date</td>
     <td>Type</td>
     <td>Day</td>
     <td>Meal Name</td>
+    <td>Created at</td>
+    <td>Updated at</td>
     </tr>
 
     {% for m in meals %}
         <tr>
         <td>{{ m.date }}</td>
-        <td>{{ m.get_type_displayp }}</td>
+        <td>{{ m.get_type_display }}</td>
         <td>{{ m.day }}</td>
         <td>{{ m.meal }}</td>
+        <td>{{ m.created_at }}</td>
+        <td>{{ m.updated_at }}</td>
+        <td><a href = "{% url 'meal.update' m.id %}">Edit</a></td>
+        <td><a href = "{% url 'meal.delete' m.id %}">Delete</a></td>
         </tr>
     {% endfor %}
 </table>

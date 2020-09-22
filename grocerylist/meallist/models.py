@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -28,8 +29,9 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
 
+
 class Meals(models.Model):
-    date = models.DateTimeField(null=True)
+    date = models.DateField(null=False)
     type = models.CharField(max_length=30,choices=MEAL_TYPES,null=True)
     day = models.CharField(max_length=30,choices=DAYS_OF_THE_WEEK,null=True)
     meal = models.ForeignKey(
@@ -39,6 +41,8 @@ class Meals(models.Model):
         blank=True,
         related_name="meals_recipe",
     )
+    created_at = models.DateTimeField(default=timezone.now(),null=False)
+    updated_at = models.DateTimeField(default=timezone.now(),null=False)
 
     class Meta:
         db_table = "meallist_meals"
