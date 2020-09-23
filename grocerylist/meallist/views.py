@@ -2,19 +2,19 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import MealNew
 from grocerylist.meallist.models import Meals
+from grocerylist.meallist.filters import MealFilter
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
+from django_filters.views import FilterView
 
 # Create your views here.
 
-# def meal_list(request):    
-#     return HttpResponse("<b>List</b>")
-
-class ListMeal(ListView):
+class ListMeal(FilterView, ListView):
     model = Meals
     context_object_name = "meals"
     template_name = "meallist/list_meal.html"
+    filterset_class = MealFilter
 
     def get_queryset(self):
         return super().get_queryset().order_by("date","type")

@@ -1,5 +1,15 @@
 <a href = "{% url 'meal.new' %}">New</a>
 
+<form method="get">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">{{ filter.form.as_p }}</th>
+            <th scope="col"><button type="submit">Go</button></th>
+        </tr>
+    </thead>
+</form>
+
 <table>
     <tr>
     <td>Date</td>

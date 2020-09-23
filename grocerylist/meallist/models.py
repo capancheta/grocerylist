@@ -48,6 +48,6 @@ class Meals(models.Model):
         db_table = "meallist_meals"
 
     def __str__(self):
-        return self.meal
+        return f"{self.date} - {self.day} - {self.meal.name}"
 
 
