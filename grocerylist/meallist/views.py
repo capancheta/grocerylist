@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import MealNew
-from grocerylist.meallist.models import Meals
+from grocerylist.meallist.models import Meals,Recipe
 from grocerylist.meallist.filters import MealFilter
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.utils import timezone
 from django.urls import reverse_lazy
 from django_filters.views import FilterView
+from grocerylist.shoppinglist.models import Items
+
 
 # Create your views here.
 
@@ -66,3 +68,31 @@ class DeleteMeal(DeleteView):
     success_url = reverse_lazy('meal.list')
     template_name  = "meallist/delete_meal.html"
 
+
+class RecipeView(ListView):
+    model = Recipe
+    context_object_name = "recipes"
+    template_name = "meallist/list_recipes.html"
+
+    def get_queryset(self):
+        return super().get_queryset().order_by("name")    
+
+
+class IngredientSelectListView(ListView):
+    model = Items
+    context_object_name = "items"
+    template_name = "meallist/list_items_select.html"
+
+    def get_context_data(self, **kwargs):
+        kwargs['recipe_id'] = self.kwargs.get('recipe_id')
+        return super().get_context_data(**kwargs)
+
+
+def add_ingredient(request, recipe_id, item_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    item = Items.objects.get(id=item_id)
+
+    recipe.ingredients.add(item)
+    recipe.save()
+
+    return redirect("recipe.list")

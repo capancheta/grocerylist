@@ -1,0 +1,13 @@
+<table>
+    <tr>
+    <td>Name</td>
+    <td>-</td>
+    </tr>
+
+    {% for r in recipes %}
+        <tr>
+        <td>{{ r.name }}</td>
+        <td><a href="{% url 'recipe.select.item' r.id %}">Add Ingredient</a></td>
+        </tr>
+    {% endfor %}
+</table>

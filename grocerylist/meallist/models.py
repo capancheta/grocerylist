@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from grocerylist.shoppinglist.models import Items
 # Create your models here.
 
 MEAL_TYPES = (
@@ -22,6 +22,11 @@ DAYS_OF_THE_WEEK = (
 
 class Recipe(models.Model):
     name = models.CharField(max_length=50,null=False)
+    ingredients = models.ManyToManyField(
+        Items,
+        blank=True,
+        related_name="recipe_items",
+    )
     class Meta:
         verbose_name = "Recipe"
         verbose_name_plural = "Recipes"
