@@ -6,8 +6,18 @@
 
     {% for r in recipes %}
         <tr>
-        <td>{{ r.name }}</td>
-        <td><a href="{% url 'recipe.select.item' r.id %}">Add Ingredient</a></td>
-        </tr>
+        <td>{{ r.name }}
+        </td>
+        <td><a href="{% url 'recipe.select.item' r.id %}">Add Ingredient</a></td>        
+            <table>
+                {% for i in r.ingredients.all %}
+                <tr>
+                <td> - {{ i.name }}</td>
+                <td><a href="{% url 'recipe.remove.item' r.id i.id %}">Remove</a></td>
+                </tr>
+                {% endfor %}
+                
+            <table>
+        </tr>            
     {% endfor %}
 </table>

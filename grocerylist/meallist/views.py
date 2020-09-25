@@ -96,3 +96,16 @@ def add_ingredient(request, recipe_id, item_id):
     recipe.save()
 
     return redirect("recipe.list")
+
+def remove_ingredient(request, recipe_id, item_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    item = Items.objects.get(id=item_id)
+
+    recipe.ingredients.remove(item)
+    recipe.save()
+
+    return redirect("recipe.list")
+
+
+def home(request):
+    return render(request,"meallist/home.html",{"message" : "Home Menu Planner"})
